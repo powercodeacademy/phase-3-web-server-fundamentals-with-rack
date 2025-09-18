@@ -58,7 +58,7 @@ To accomplish this with Rack, we need to create a class that responds to a
 single method: `#call`. All this method needs to do is return an array with
 three elements:
 
-- A [**status code**][http-status] (where `200` is used for `OK`)
+- A [status code][http-status] (where `200` is used for `OK`)
 - A **response headers** hash with a `"Content-Type"` key that returns the
   value of `text/html` (for HTML-based responses)
 - An array of strings to send back in the **body** of the response (in our case,
@@ -73,7 +73,7 @@ Essentially, we need the `#call` method to return something like this:
 Here's an example that returns an HTML string:
 
 ```rb
-[200, { "Content-Type" => "text/html" }, ["<h2>Hello <em>World</em>!</h2>"]]
+[200, { 'content-type' => 'text/html' }, ["<h2>Hello <em>World</em>!</h2>"]]
 ```
 
 ## Creating a Rack-Based Web Server
@@ -93,7 +93,7 @@ require 'rack'
 
 class App
   def call(env)
-    [200, { "Content-Type" => "text/html" }, ["<h2>Hello <em>World</em>!</h2>"]]
+    [200, { 'content-type' => 'text/html' }, ["<h2>Hello <em>World</em>!</h2>"]]
   end
 end
 
@@ -108,10 +108,12 @@ appropriate **response**.
 Run this code from the command line:
 
 ```console
-$ rackup config.ru
+bin/rackup
 ```
 
-Rack will print out something like:
+Rackup will look for `config.ru` by default. If you happened to need to pass it another file, you can add that after the command as such: `bin/rackup other_file.ru`.
+
+After running that, Rack will print out something like:
 
 ```text
 [2021-07-19 16:38:10] INFO  WEBrick 1.4.2
@@ -167,7 +169,7 @@ end
 run App.new
 ```
 
-Then, stop (`control + c`) and restart the server (`rackup config.ru`), and
+Then, stop (`control + c`) and restart the server (`bin/rackup`), and
 refresh the browser to make another request to the server. You should hit your
 `binding.pry` breakpoint, where you can explore the `env` hash with all the data
 about the request:
